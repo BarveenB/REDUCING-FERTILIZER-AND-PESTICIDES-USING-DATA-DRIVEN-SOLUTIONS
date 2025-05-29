@@ -1,0 +1,7 @@
+flask
+opencv-python==4.5.4.60
+tensorflow==2.13.0
+teachable-machine==1.1
+pandas
+matplotlib
+mysql-connector-python==8.0.32
