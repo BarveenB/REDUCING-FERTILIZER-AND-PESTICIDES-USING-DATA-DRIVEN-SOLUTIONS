@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation</title>
+</head>
+<body>
+    <h2>Fertilizer Recommendation</h2>
+    <p>{{ recommendation }}</p>
+
+    <h3>Weather Forecast</h3>
+    <ul>
+        {% for day in weather %}
+            <li>{{ day.date }} - Rainfall: {{ day.rainfall_mm }} mm</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/soil">Go Back</a>
+</body>
+</html>
