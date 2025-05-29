@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Result</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background-image: url('static/media/images.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .image-frame {
+      border: 2px solid #000;
+      padding: 5px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: rgba(255, 255, 255, 0);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+      text-align: center;
+      position: relative;
+    }
+    .result-image {
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .result-image img {
+      display: block;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 30px;
+      color: #0d0d0e;
+      text-align: center;
+      font-weight: bold;
+      text-shadow: 2px 2px #a3a2a2;
+    }
+    h2 {
+      font-size: 25px;
+      color: #0c0c0c;
+      font-weight: bold;
+      text-align: left;
+    }
+    p {
+      font-size: 16px;
+      color: #0f0f0f;
+      text-align: left;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .special-link {
+      color: blue;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(255, 254, 254, 0.1);
+    }
+    .special-link:hover {
+      text-decoration: underline;
+      color: darkblue;
+    }
+    /* Chatbot Icon Styles */
+    .chatbot-icon {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .chatbot-icon:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Prediction Result</h1>
+    <h1>Detected Pest Condition: {{ msg }}</h1>
+    <h2>Fertilizer (English): {{ msg1 }}</h2>
+    
+    <img src="{{ src }}" alt="Uploaded Image" width="400" class="image-frame"><br><br>
+    <a href="/upload" class="special-link">Upload Another Image</a><br>
+    
+    <p>Detected Pest Condition Voice:</p>
+    <p>
+      <b>English:</b>
+      <audio controls>
+        <source src="{{ url_for('static', filename='result_voice_en.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+    <p>
+      <b>Tamil:</b>
+      <audio controls>
+        <source src="{{ url_for('static', filename='result_voice_ta.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+    
+    <p>Fertilizer Voice:</p>
+    <p>
+      <b>English:</b>
+      <audio controls>
+        <source src="{{ url_for('static', filename='ferti_voice_en.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+    <p>
+      <b>Tamil:</b>
+      <audio controls>
+        <source src="{{ url_for('static', filename='ferti_voice_ta.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+    
+    <!-- Chatbot Icon -->
+    <a href="/chatbot" target="_blank">
+      <img src="https://img.icons8.com/ios-filled/50/007bff/chat.png" alt="Chatbot Icon" class="chatbot-icon">
+    </a>
+  </div>
+</body>
+</html>
