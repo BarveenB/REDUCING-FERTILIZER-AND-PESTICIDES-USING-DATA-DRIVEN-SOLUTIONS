@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaf Color Capture</title>
+</head>
+<body>
+    <h2>Capture Leaf Image</h2>
+    <video id="video" width="320" height="240" autoplay></video>
+    <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
+    <form method="POST">
+        <input type="hidden" name="image_data" id="image_data">
+        <button type="button" id="snap">Capture</button>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById("snap");
+        const imageData = document.getElementById("image_data");
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            });
+
+        snap.addEventListener("click", () => {
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL("image/png");
+            imageData.value = dataURL;
+            alert("Image Captured! Click Submit to Analyze.");
+        });
+    </script>
+</body>
+</html>

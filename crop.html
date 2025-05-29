@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Recommender | AgriSmart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #388E3C;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --accent: #8BC34A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 i {
+            color: var(--primary);
+        }
+        
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            grid-column: 1 / -1;
+            justify-self: center;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .result-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+            display: {% if result %}block{% else %}none{% endif %};
+        }
+        
+        .result-container h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .result-container h3 i {
+            color: var(--primary);
+        }
+        
+        .crop-details {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .crop-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .crop-info {
+            flex: 1;
+        }
+        
+        .crop-info p {
+            margin-bottom: 0.8rem;
+        }
+        
+        .audio-player {
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+        
+        .info-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .crop-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .crop-image {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-seedling"></i> Smart Crop Recommender</h2>
+        
+        <form method="post" class="form-container">
+            <div class="form-group">
+                <label for="district">District</label>
+                <select id="district" name="district" required>
+                    {% for d in districts %}
+                    <option value="{{ d }}">{{ d }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="soil_type">Soil Type</label>
+                <select id="soil_type" name="soil_type" required>
+                    {% for s in soils %}
+                    <option value="{{ s }}">{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="season">Season</label>
+                <select id="season" name="season" required>
+                    {% for s in seasons %}
+                    <option value="{{ s }}">{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="ph">Soil pH Level</label>
+                <input type="number" id="ph" name="ph" step="0.1" min="0" max="14" required>
+                <p class="info-text">(0-14 scale, 7 is neutral)</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="nitrogen">Nitrogen (kg/ha)</label>
+                <input type="number" id="nitrogen" name="nitrogen" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phosphorus">Phosphorus (kg/ha)</label>
+                <input type="number" id="phosphorus" name="phosphorus" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="potassium">Potassium (kg/ha)</label>
+                <input type="number" id="potassium" name="potassium" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="rainfall">Rainfall (mm)</label>
+                <input type="number" id="rainfall" name="rainfall" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="temp">Temperature (°C)</label>
+                <input type="number" id="temp" name="temp" step="0.1" required>
+            </div>
+            
+            <button type="submit" class="btn">
+                <i class="fas fa-search"></i> Get Crop Recommendation
+            </button>
+        </form>
+        
+        {% if result %}
+        <div class="result-container">
+            <h3><i class="fas fa-check-circle"></i> Recommended Crop: <span style="color: var(--secondary)">{{ result }}</span></h3>
+            
+            <div class="crop-details">
+        
+            
+                     
+                
+                <div class="crop-info">
+                    <p><strong>Why this crop?</strong> Based on your soil conditions and climate parameters, {{ result }} is the most suitable crop for optimal yield.</p>
+                    <p><strong>Planting Tips:</strong> Best planted in {{ season }} with proper irrigation management.</p>
+                    <p><strong>Expected Yield:</strong> 3-5 tons per hectare with proper care.</p>
+                </div>
+            </div>
+            
+            {% if audio_path %}
+            <div class="audio-player">
+                <p><strong>Listen to planting instructions:</strong></p>
+                <audio controls>
+                    <source src="{{ url_for('static', filename='crop_audio.mp3') }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
