@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pest Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            color: #4a6b7d;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .upload-area {
+            border: 2px dashed #c3cfe2;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area:hover {
+            border-color: #7d9eb8;
+            background: #f8fafc;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: #7d9eb8;
+            margin-bottom: 15px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            display: {% if result %}block{% else %}none{% endif %};
+        }
+        
+        .result-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .result-icon {
+            font-size: 20px;
+            color: #667eea;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .result-image {
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-top: 15px;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .confidence-meter {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .confidence-level {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 5px;
+            width: {{ result.confidence if result else 0 }}%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-bug"></i> Pest Detection</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            <label class="upload-area" for="file-upload">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <p>Upload an image of a pest</p>
+                <p class="text-muted">(JPEG, PNG formats supported)</p>
+                <input id="file-upload" class="file-input" type="file" name="image" accept="image/*">
+            </label>
+            <button type="submit" class="btn">
+                <i class="fas fa-search"></i> Detect Pest
+            </button>
+        </form>
+        
+        {% if result %}
+        <div class="result-container">
+            <h3>Detection Results</h3>
+            
+            <div class="result-item">
+                <div class="result-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <div>
+                    <strong>Pest Type:</strong> {{ result.class }}
+                </div>
+            </div>
+            
+            <div class="result-item">
+                <div class="result-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <strong>Confidence:</strong> {{ result.confidence | round(2) }}%
+                    <div class="confidence-meter">
+                        <div class="confidence-level" style="width: {{ result.confidence }}%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-item">
+                <div class="result-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div>
+                    <strong>Uploaded Image:</strong>
+                    <img src="{{ image_path }}" class="result-image">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

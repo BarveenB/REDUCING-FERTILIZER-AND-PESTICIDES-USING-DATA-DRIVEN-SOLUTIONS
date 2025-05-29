@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+body{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.container{
+  max-width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+.container .title{
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
+.container .title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.content form .user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .user-details .input-box{
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+form .input-box span.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+
+
+
+ form .button{
+   height: 45px;
+   margin: 35px 0
+ }
+ form .button input{
+   height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+ }
+
+</style>
+   </head>
+<body>
+  <div class="container">
+    <div class="title">Registration</div>
+    <div class="content">
+    <form id="form" name="form" method="post" action="/reg">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Full Name</span>
+            <input name="name" type="text" id="name"  required pattern="[A-Za-z ]{3,32}"/>
+          </div>
+          <div class="input-box">
+            <span class="details">Username</span>
+            <input name="uname" type="text" id="uname"  required/>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input name="email" type="email" id="email" required />
+          </div>
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            <input name="phone" type="text" id="phone"   required size="10" pattern="[0-9]{10}"/>
+          </div>
+          <div class="input-box">
+            <span class="details">Age</span>
+           <input name="age" type="text" id="age" required size="3" />
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            <input name="psw" type="password" id="psw"  required/>
+          </div>
+        </div>
+
+
+          <span class="gender-title">Gender</span>
+          <select id="gender" name="gender"><option name="male" id="male" value="male">male</option>
+            <option name="male" id="female" value="female">female</option>
+<
+          <option name="none" id="none" value="not to say">Prefer not to say</option></select>
+
+        <div class="button">
+          <input type="submit" value="Register">
+
+        </div>
+      <div align="center"><a style="text-decoration: none; " href="/" ><b>Back</b></a></div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
