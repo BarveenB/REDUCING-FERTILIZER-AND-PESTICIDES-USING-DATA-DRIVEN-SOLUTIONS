@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Fertilizer Advisor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2E7D32;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --accent: #8BC34A;
+            --text: #333;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .main {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h1 i {
+            color: var(--primary);
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        label i {
+            color: var(--primary);
+            font-size: 0.9em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: var(--white);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            outline: none;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            transform: scale(1.3);
+            margin-left: 5px;
+        }
+
+        button {
+            grid-column: span 2;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .error {
+            color: #D32F2F;
+            background-color: #FFEBEE;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #D32F2F;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendation-box {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        ul li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        ul li i {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+            
+            button {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1><i class="fas fa-seedling"></i> Smart Fertilizer Recommendation System</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label><i class="fas fa-city"></i> City:</label>
+                <input type="text" name="city" value="Trichy" required>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-leaf"></i> Crop:</label>
+                <select name="crop">
+                    <option value="Rice">Rice</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Maize">Maize</option>
+                    <option value="Sugarcane">Sugarcane</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-globe-asia"></i> Region:</label>
+                <input type="text" name="region" value="Tamil Nadu">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-flask"></i> Soil pH:</label>
+                <input type="number" step="0.1" name="ph" value="6.5" min="4" max="9">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-recycle"></i> Organic Matter (%):</label>
+                <input type="number" step="0.1" name="organic_matter" value="2.5" min="0" max="10">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-atom"></i> Nitrogen Level:</label>
+                <select name="nitrogen_level">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-bacteria"></i> Microbial Activity:</label>
+                <select name="microbial_activity">
+                    <option value="low">Low</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <label><i class="fas fa-camera"></i> Use Webcam for Leaf Color:</label>
+                <input type="checkbox" name="use_camera">
+            </div>
+
+            <button type="submit"><i class="fas fa-calculator"></i> Generate Recommendation</button>
+        </form>
+
+        {% if error %}
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i> Error: {{ error }}
+            </div>
+        {% endif %}
+
+        {% if weather %}
+            <h3><i class="fas fa-cloud-sun-rain"></i> Weather Forecast:</h3>
+            <ul>
+                {% for day in weather %}
+                    <li><i class="fas fa-calendar-day"></i> <strong>{{ day.date }}</strong>: {{ day.rainfall_mm }} mm</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if result %}
+            <div class="recommendation-box">
+                <h3><i class="fas fa-clipboard-list"></i> Fertilizer Recommendation:</h3>
+                <div>{{ result | safe }}</div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
